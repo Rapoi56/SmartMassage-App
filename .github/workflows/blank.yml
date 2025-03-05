@@ -1,0 +1,43 @@
+name: CI - Smart Massage
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - uses: actions/checkout@v4
+
+      # Set up Node.js for Smart Massage project
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # حدد إصدار Node.js الذي تستخدمه
+
+      # Install dependencies for Smart Massage project
+      - name: Install dependencies
+        run: npm install  # تأكد من أنك تستخدم npm أو الأمر المناسب لمشروع Smart Massage
+
+      # Run tests for Smart Massage
+      - name: Run tests
+        run: npm test  # استخدم الأمر المناسب لاختبارات Smart Massage، مثل `npm run test`
+
+      # Build the Smart Massage project
+      - name: Build Smart Massage project
+        run: npm run build  # تأكد من أنك تستخدم الأمر الصحيح لبناء المشروع
+
+      # Deploy to production (if applicable for Smart Massage)
+      - name: Deploy to production
+        run: ./deploy.sh  # استخدم الأمر الخاص بك للنشر إلى البيئة الخاصة بمشروع Smart Massage
+
+      # Notify on success
+      - name: Notify on success
+        if: success()
+        run: echo "Smart Massage build succeeded!"  # يمكن تعديلها لإرسال إشعار أو بريد إلكتروني
